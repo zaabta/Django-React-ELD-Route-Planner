@@ -1,5 +1,6 @@
 import { useCallback, useState } from 'react'
-import { GoogleMap, LoadScript, MarkerF, PolygonF } from '@react-google-maps/api'
+import polylineLib from '@mapbox/polyline';
+import { GoogleMap, LoadScript, MarkerF, PolylineF } from '@react-google-maps/api'
 import type { MapViewProps } from '../types'
 import LocationOverlay from './LocationOverlay'
 
@@ -17,7 +18,7 @@ export default function MapView({
   currentLocation,
   pickupLocation,
   dropoffLocation,
-  polyline,
+  route,
 }: MapViewProps): JSX.Element {
   const [loadedMap, setMap] = useState<google.maps.Map | null>(null)
 
@@ -27,7 +28,7 @@ export default function MapView({
 
   return (
     <div className="relative mb-8 w-full rounded-xl shadow-md h-[500px] max-sm:h-[300px]">
-      <LoadScript googleMapsApiKey="AIzaSyByutQmxT96kVVIapfHsNsruYdPfN-VsCo">
+      <LoadScript googleMapsApiKey={import.meta.env.VITE_MAP_KEY || ''}>
         <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={12} onLoad={onLoad}>
           <MarkerF
             position={currentLocation.coordinates}
@@ -41,9 +42,9 @@ export default function MapView({
             position={dropoffLocation.coordinates}
             icon="http://maps.google.com/mapfiles/ms/icons/red-dot.png"
           />
-          {polyline && (
-            <PolygonF
-              path={JSON.parse(polyline) as google.maps.LatLngLiteral[]}
+          {route && (
+            <PolylineF
+              path={polylineLib.decode(route).map(([lat, lng]) => ({ lat, lng }))}
               options={{
                 strokeColor: '#FF0000',
                 strokeOpacity: 0.8,

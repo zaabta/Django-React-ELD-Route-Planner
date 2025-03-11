@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import type { FormInput, RestStop, Trip } from './types'
 import { MapView, TripDetails, TripForm } from './components'
+import './App.css'
 
 export default function App(): JSX.Element {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -18,11 +19,13 @@ export default function App(): JSX.Element {
     route: '',
   })
 
+  
+
   const handleSubmit = async (input: FormInput): Promise<void> => {
     try {
       setLoading(true)
       const res = await fetch(
-        `http://127.0.0.1:8000/api/trips/plan/?current_location=${input.currentLocation}&dropoff={${input.dropoffLocation}}&pickup={${input.pickupLocation}&current_cycle_used=${input.cycleHours}`,
+        `${import.meta.env.VITE_APP_API_KEY}/api/trips/plan/?current_location=${input.currentLocation}&dropoff={${input.dropoffLocation}}&pickup={${input.pickupLocation}&current_cycle_used=${input.cycleHours}`,
       )
       const json = (await res.json()) as Trip
       setTrip(json)
@@ -42,12 +45,12 @@ export default function App(): JSX.Element {
           }`}
         >
           <h1 className="mb-8 pl-5 text-2xl font-semibold">Spotter</h1>
-          <div className="flex-1 h-40 p-6 mb-52 rounded-xl bg-white bg-opacity-10">
+          <div className="flex justify-center p-6 rounded-xl bg-white bg-opacity-10">
             <TripForm onSubmit={(input) => handleSubmit(input)} isLoading={isLoading} />
           </div>
         </nav>
 
-        <main className="overflow-auto relative flex-1 p-12 pt-20 bg-slate-50 max-md:p-8 max-sm:p-6 max-sm:mt-16 max-sm:h-[calc(100vh_-_60px)]">
+        <main className="overflow-auto relative flex-1 p-12 pt-20 bg-slate-50 max-md:p-8 max-sm:p-6 max-sm:mt-10 max-sm:h-[calc(100vh_-_60px)]">
           <MapView
             currentLocation={{
               coordinates: { lat: trip.current_coords[0], lng: trip.current_coords[1] },

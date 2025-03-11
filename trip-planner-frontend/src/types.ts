@@ -59,7 +59,6 @@ export interface MapViewProps {
   currentLocation: Location
   pickupLocation: Location
   dropoffLocation: Location
-  polyline?: string
   route: string
 }
 

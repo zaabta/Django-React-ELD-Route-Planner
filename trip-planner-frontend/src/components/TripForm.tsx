@@ -37,7 +37,7 @@ export default function TripForm({ onSubmit, isLoading }: TripFormProps): JSX.El
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className='w-full' onSubmit={handleSubmit}>
       <div className="flex flex-col gap-6">
         <div className="flex flex-col gap-2">
           <label htmlFor="current-location" className="text-sm font-medium text-white">
@@ -47,7 +47,7 @@ export default function TripForm({ onSubmit, isLoading }: TripFormProps): JSX.El
             id="current-location"
             type="text"
             placeholder="Enter current location"
-            className="px-4 py-3 w-full text-base rounded-lg border border-slate-200 text-zinc-800"
+            className="px-4 py-3 w-full text-base rounded-lg bg-white border border-slate-200 text-zinc-800"
             value={formInput.currentLocation}
             onChange={(event) => handleInputChange('currentLocation', event.target.value)}
           />
@@ -60,7 +60,7 @@ export default function TripForm({ onSubmit, isLoading }: TripFormProps): JSX.El
             id="pickup-location"
             type="text"
             placeholder="Enter pickup location"
-            className="px-4 py-3 w-full text-base rounded-lg border border-slate-200 text-zinc-800"
+            className="px-4 py-3 w-full text-base rounded-lg bg-white border border-slate-200 text-zinc-800"
             value={formInput.pickupLocation}
             onChange={(event) => handleInputChange('pickupLocation', event.target.value)}
           />
@@ -73,7 +73,7 @@ export default function TripForm({ onSubmit, isLoading }: TripFormProps): JSX.El
             id="dropoff-location"
             type="text"
             placeholder="Enter dropoff location"
-            className="px-4 py-3 w-full text-base rounded-lg border border-slate-200 text-zinc-800"
+            className="px-4 py-3 w-full text-base rounded-lg bg-white border border-slate-200 text-zinc-800"
             value={formInput.dropoffLocation}
             onChange={(event) => handleInputChange('dropoffLocation', event.target.value)}
           />
@@ -88,21 +88,21 @@ export default function TripForm({ onSubmit, isLoading }: TripFormProps): JSX.El
             placeholder="Enter hours (0-24)"
             min="0"
             max="70"
-            className="px-4 py-3 w-full text-base rounded-lg border border-slate-200 text-zinc-800"
+            className="px-4 py-3 w-full text-base rounded-lg bg-white border border-slate-200 text-zinc-800"
             value={formInput.cycleHours}
             onChange={(event) => handleInputChange('cycleHours', Number(event.target.value))}
           />
         </div>
         <button
           type="submit"
-          className="py-4 w-full text-base font-medium text-white rounded-lg"
-          disabled={!isLoading}
+          className="py-4 w-full text-base font-medium bg-white text-white rounded-lg"
+          disabled={isLoading}
           style={{
-            background: !isLoading ? '#9CA3AF' : '#4318D1',
-            cursor: !isLoading ? 'not-allowed' : 'pointer',
+            background: isLoading ? '#9CA3AF' : '#4318D1',
+            cursor: isLoading ? 'not-allowed' : 'pointer',
           }}
         >
-          {!isLoading ? 'Processing...' : 'Generate Trip & Logs'}
+          {isLoading ? 'Processing...' : 'Generate Trip & Logs'}
         </button>
       </div>
     </form>

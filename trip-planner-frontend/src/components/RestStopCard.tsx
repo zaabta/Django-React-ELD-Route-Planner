@@ -14,7 +14,7 @@ export default function RestStopCard({ stop }: RestStopCardProps): JSX.Element {
           <span className="text-sm text-slate-500">{stop.reason}</span>
         </div>
         <div className="flex gap-2 items-center">
-          <span className="text-indigo-700">📍</span>
+          <span className="text-indigo-700 self-start">📍</span>
           <span className="text-sm text-slate-500">{stop.address}</span>
         </div>
       </div>
